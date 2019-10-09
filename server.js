@@ -60,8 +60,19 @@ app.get("/favorites", function(req,res) {
 })
 // A GET route for scraping the echoJS website
 app.get("/scrape", function(req, res) {
+
   // First, we grab the body of the html with axios
   axios.get("https://www.dailytargum.com/section/news").then(function(response) {
+
+    db.Article.remove()
+    .then(function(dbArticle) {
+      // View the added result in the console
+      console.log(dbArticle);
+    })
+    .catch(function(err) {
+      // If an error occurred, log it
+      console.log(err);
+    });
     // Then, we load that into cheerio and save it to $ for a shorthand selector
     var $ = cheerio.load(response.data);
 
@@ -112,7 +123,8 @@ console.log(result)
     });
 
     // Send a message to the client
-    res.send("Scrape Complete");
+    // res.send("Scrape Complete");
+    res.render(path.join(__dirname, "views/pages/news.ejs"));
   });
 });
 

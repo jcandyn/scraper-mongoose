@@ -89,7 +89,7 @@ $(document).on("click", ".note", function() {
       // // A textarea to add a new note body
       noteRow.append("<textarea id='bodyinput' name='body'></textarea>");
       // // A button to submit a new note, with the id of the article saved to it
-      noteRow.append("<button class='waves-effect waves-light btn modal-trigger blue darken-1' data-id='" + data._id + "' id='savenote'>Save Note</button>");
+      noteRow.append("<button class='waves-effect waves-light btn blue accent-2' data-id='" + data._id + "' id='savenote'>Save Note</button>");
       note.append(noteRow)
 
       // If there's a note in the article
