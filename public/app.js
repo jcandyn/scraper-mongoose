@@ -1,13 +1,13 @@
-document.addEventListener('DOMContentLoaded', function() {
-  var elems = document.querySelectorAll('.sidenav');
-  var instances = M.Sidenav.init(elems, options);
-});
+// document.addEventListener('DOMContentLoaded', function() {
+//   var elems = document.querySelectorAll('.sidenav');
+//   var instances = M.Sidenav.init(elems, options);
+// });
 
-// Or with jQuery
+// // Or with jQuery
 
-$(document).ready(function(){
-  $('.sidenav').sidenav();
-});
+// $(document).ready(function(){
+//   $('.sidenav').sidenav();
+// });
 
 
 
@@ -25,9 +25,10 @@ $.getJSON("/articles", function(data) {
 
 function newCard(x) {
   console.log(x)
- 
+
 const cardGroup = $(".card-group")
 const newCardContainer = $("<div>").addClass("row")
+const newNote = $('<div>').addClass("notes").attr("this_row", "iden" + x._id).addClass("iden" + x._id)
 const newPostCard = $('<div>').addClass("card")
 const newPostTitle = $("<h5>").addClass('card-title');
 const favBtn = $("<a>").addClass('btn-floating btn-large waves-effect waves-light red')
@@ -55,6 +56,7 @@ newCardBody.append(favButton)
 
 newPostCard.append(newCardBody)
 newCardContainer.append(newPostCard)
+newCardContainer.append(newNote)
 cardGroup.append(newCardContainer)
 
         
@@ -65,7 +67,7 @@ cardGroup.append(newCardContainer)
 // Whenever someone clicks a p tag
 $(document).on("click", ".note", function() {
   // Empty the notes from the note section
-  $("#notes").empty();
+  $(".notes").empty();
   // Save the id from the p tag
   var thisId = $(this).attr("item");
 
@@ -77,16 +79,18 @@ $(document).on("click", ".note", function() {
     // With that done, add the note information to the page
     .then(function(data) {
       console.log(data);
+     var noteRow = $('<div>')
+     var note = $('.iden' + data._id)
       
-     
       // // The title of the article
-      $("#notes").append("<h2>" + data.title + "</h2>");
+      noteRow.append("<h4>" + data.title + "</h4>");
       // // An input to enter a new title
-      $("#notes").append("<input id='titleinput' name='title' >");
+      noteRow.append("<input id='titleinput' name='title' placeholder='Write a title for your note' >");
       // // A textarea to add a new note body
-      $("#notes").append("<textarea id='bodyinput' name='body'></textarea>");
+      noteRow.append("<textarea id='bodyinput' name='body'></textarea>");
       // // A button to submit a new note, with the id of the article saved to it
-      $("#notes").append("<button data-id='" + data._id + "' id='savenote'>Save Note</button>");
+      noteRow.append("<button class='waves-effect waves-light btn modal-trigger blue darken-1' data-id='" + data._id + "' id='savenote'>Save Note</button>");
+      note.append(noteRow)
 
       // If there's a note in the article
       if (data.note) {
@@ -120,7 +124,7 @@ $(document).on("click", "#savenote", function() {
       // Log the response
       console.log(data);
       // Empty the notes section
-      $("#notes").empty();
+      $(".notes").empty();
     });
 
   // Also, remove the values entered in the input and textarea for note entry
