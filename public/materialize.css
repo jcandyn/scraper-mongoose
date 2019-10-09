@@ -1,0 +1,23 @@
+
+
+.nav-wrapper {
+
+   background-color: white;
+  
+}
+
+.navLink {
+    color: black !important;
+    text-decoration: none !important;
+}
+
+.brand-logo {
+    color: black !important;
+    text-decoration: none !important;
+    margin-left: 10px;
+}
+
+.material-icons{ 
+    color: black !important;
+}
+
