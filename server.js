@@ -29,7 +29,7 @@ app.use(express.static("public"));
 
 
 // Connect to the Mongo DB
-var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/thetargumstewdb";
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/nichedb";
 
 // Set mongoose to leverage built in JavaScript ES6 Promises
 // Connect to the Mongo DB
@@ -62,7 +62,7 @@ app.get("/favorites", function(req,res) {
 app.get("/scrape", function(req, res) {
 
   // First, we grab the body of the html with axios
-  axios.get("https://www.dailytargum.com/section/news").then(function(response) {
+  axios.get("https://www.careeronestop.org/toolkit/training/find-scholarships.aspx?lang=en&keyword=&pagesize=50").then(function(response) {
 
     db.Article.remove()
     .then(function(dbArticle) {
@@ -77,37 +77,34 @@ app.get("/scrape", function(req, res) {
     var $ = cheerio.load(response.data);
 
     // Now, we grab every h2 within an article tag, and do the following:
-    $(".art-left").each(function(i, element) {
+    $("tr").each(function(i, element) {
       // Save an empty result object
     
-
+      
       // Add the text and href of every link, and save them as properties of the result object
-      var image = $(element).find(".col-md-4")
-        .find(".image-container")
-        .find("a").find('img').attr('src');
-        var link = $(element).find(".col-md-4")
-        .find(".image-container").find("a")
-        .attr("href")
-      var author = $(element).find(".col-md-8")
-        .find(".dateline")
-        .find("a").text();
-        var abstract = $(element).find(".col-md-8")
+      var title = $(element).find("a").text()
+      var money = $(element).find(".notranslate").text()
+      var description = $(element).find('div').text()
+        var link = "https://www.careeronestop.org/" + $(element).find("a").attr("href")
+      
+      // var author = $(element).find(".col-md-8")
+      //   .find(".dateline")
+      //   .find("a").text();
+      //   var abstract = $(element).find(".col-md-8")
 
-        .find(".article-abstract").text()
-       var timestamp = $(element).find(".col-md-8")
-         .find(".dateline")
-        .find(".time-since").text();
-        var title = $(element).find(".col-md-8")
-        .find(".headline").find("a")
-        .text()
+      //   .find(".article-abstract").text()
+      //  var timestamp = $(element).find(".col-md-8")
+      //    .find(".dateline")
+      //   .find(".time-since").text();
+      //   var title = $(element).find(".col-md-8")
+      //   .find(".headline").find("a")
+      //   .text()
 
         var result = {
-            image: image,
             link: link,
-            author: author,
-            abstract: abstract,
-            timestamp: timestamp,
-            title: title
+            title: title,
+            money: money,
+            description: description
         }
 console.log(result)
       // Create a new Article using the `result` object built from scraping

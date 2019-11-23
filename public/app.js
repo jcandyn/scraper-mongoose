@@ -15,6 +15,7 @@
 
 $.getJSON("/articles", function(data) {
   // For each one
+  data.shift()
 
   for (var i = 0; i < data.length; i++) {
     newCard(data[i])
@@ -37,15 +38,33 @@ const newCardBody = $("<div>").addClass("card-body");
 const newPostPrice = $("<p>").addClass('card-text');
 const newPostImg = $("<img>").addClass("card-img-top responsive-img")
 const newBtn = $("<a>").addClass("waves-effect waves-light btn modal-trigger red red darken-1").text("read more").css("color", "white").css("cursor","pointer").attr("item",x._id).attr("href", x.link).attr("target","_blank").css("margin", "5px")
-const favButton = $("<a>").addClass("waves-effect waves-light btn modal-trigger red accent-2 pulse favButton").css("color", "white").css("cursor","pointer").attr("item",x._id).css("margin", "5px")
+const favButton = $("<a>").addClass("waves-effect waves-light btn modal-trigger green accent-2 pulse favButton").css("color", "white").css("cursor","pointer").attr("item",x._id).css("margin", "5px")
 const noteButton = $("<a>").addClass("waves-effect waves-light btn modal-trigger grey darken-2 note").text("Write Note").css("color", "white").css("cursor","pointer").attr("item",x._id).css("margin", "5px")
 newPostTitle.text(x.title)
-newPostPrice.text(x.abstract)
+const newPostDescription = $("<p>").text(x.description)
+
+if (x.money) {
+  // x.money = x.money.splice("$")
+  // if (x.money.length === 2) {
+  //   newPostPrice.text("Prize: " + x.money[0] + " & " + x.money[1])
+  // }
+  // else 
+  // we need to split at $ and join later with space and the & symbol in between 
+  x.money = x.money.split("$")
+  console.log(x.money)
+  if (x.money.length > 2) {
+newPostPrice.text("Prize: $" + x.money[1] + " & " + x.money[2])
+  } else
+  newPostPrice.text("Prize: $" + x.money[1])
+}
+
+
 newPostImg.attr("src", x.image)
 newPostCard.append(newPostImg)
 
 // newPostCard.append(favBtn)
 newCardBody.append(newPostTitle)
+newCardBody.append(newPostDescription)
 
 newCardBody.append(newPostPrice)
 newCardBody.append(newBtn)
