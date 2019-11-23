@@ -114,23 +114,6 @@ app.get("/articles/:id", function(req, res) {
   })
 });
 
-// Route for saving/updating an Article's associated Note
-app.post("/articles/:id", function(req, res) {
-db.Note.create(req.body)
-.then(function(newNote){
-  return db.Article.findOneAndUpdate({_id: req.params.id}, {note: newNote._id}, {new: true})
-})
-.then(function(dbArticle){
-  res.json(dbArticle)
-}).catch(function(err){
-  res.json(err)
-})
-  // TODO
-  // ====
-  // save the new note that gets posted to the Notes collection
-  // then find an article from the req.params.id
-  // and update it's "note" property with the _id of the new note
-});
 
 app.post("/favorites/:id", function(req, res) {
   // db.Favorite.create(req.body)
