@@ -7,17 +7,12 @@ var path = require("path");
 // It works on the client and on the server
 var axios = require("axios");
 var cheerio = require("cheerio");
-
 // Require all models
 var db = require("./models");
-
 var PORT = process.env.PORT || 8080;
-
 // Initialize Express
 var app = express();
-
 // Configure middleware
-
 // Use morgan logger for logging requests
 app.use(logger("dev"));
 // Parse request body as JSON
@@ -25,26 +20,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 // Make public a static folder
 app.use(express.static("public"));
-
-
-
 // Connect to the Mongo DB
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/nichedb";
-
 // Set mongoose to leverage built in JavaScript ES6 Promises
 // Connect to the Mongo DB
 mongoose.Promise = Promise;
-mongoose.connect(MONGODB_URI);
-// mongoose.connect("mongodb://localhost/thetargumstewdb", { useNewUrlParser: true });
-
-// mongoose.connect('mongodb://localhost/thetargumstewdb').then(() => {
-// console.log("Connected to Database");
-// }).catch((err) => {
-//     console.log("Not Connected to Database ERROR! ", err);
-// });
-
-
-
 mongoose.connect(MONGODB_URI);
 
 // Routes
@@ -78,27 +58,12 @@ app.get("/scrape", function(req, res) {
 
     // Now, we grab every h2 within an article tag, and do the following:
     $("tr").each(function(i, element) {
-      // Save an empty result object
     
-      
       // Add the text and href of every link, and save them as properties of the result object
       var title = $(element).find("a").text()
       var money = $(element).find(".notranslate").text()
       var description = $(element).find('div').text()
         var link = "https://www.careeronestop.org/" + $(element).find("a").attr("href")
-      
-      // var author = $(element).find(".col-md-8")
-      //   .find(".dateline")
-      //   .find("a").text();
-      //   var abstract = $(element).find(".col-md-8")
-
-      //   .find(".article-abstract").text()
-      //  var timestamp = $(element).find(".col-md-8")
-      //    .find(".dateline")
-      //   .find(".time-since").text();
-      //   var title = $(element).find(".col-md-8")
-      //   .find(".headline").find("a")
-      //   .text()
 
         var result = {
             link: link,
@@ -147,11 +112,6 @@ app.get("/articles/:id", function(req, res) {
   .catch(function(err){
     res.json(err)
   })
-  // TODO
-  // ====
-  // Finish the route so it finds one article using the req.params.id,
-  // and run the populate method with "note",
-  // then responds with the article with the note included
 });
 
 // Route for saving/updating an Article's associated Note
