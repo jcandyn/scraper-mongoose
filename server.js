@@ -101,18 +101,7 @@ app.get("/articles", function(req, res) {
   // TODO: Finish the route so it grabs all of the articles
 });
 
-// Route for grabbing a specific Article by id, populate it with it's note
-app.get("/articles/:id", function(req, res) {
 
-  db.Article.findOne({_id:req.params.id})
-  .populate("note")
-  .then(function(dbArticle){
-    res.json(dbArticle)
-  })
-  .catch(function(err){
-    res.json(err)
-  })
-});
 
 
 app.post("/favorites/:id", function(req, res) {
