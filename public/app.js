@@ -30,8 +30,8 @@ newPostPrice.text("Prize: $" + x.money[1] + " & " + x.money[2])
   newPostPrice.text("Prize: $" + x.money[1])
 }
 
-newPostImg.attr("src", x.image)
-newPostCard.append(newPostImg)
+
+
 
 newCardBody.append(newPostTitle)
 newCardBody.append(newPostDescription)
@@ -42,7 +42,6 @@ favButton.append(favBtnIcon)
 newCardBody.append(favButton)
 newPostCard.append(newCardBody)
 newCardContainer.append(newPostCard)
-newCardContainer.append(newNote)
 cardGroup.append(newCardContainer)
 }
 
